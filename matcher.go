@@ -6,9 +6,11 @@ import (
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/dlclark/regexp2"
 )
 
-var timestampLayoutRegexps = map[string]*regexp.Regexp{
+var timestampLayoutRegexps = map[string]*regexp2.Regexp{
 	time.ANSIC:       ANSICRegexp,
 	time.UnixDate:    UnixDateRegexp,
 	time.RubyDate:    RubyDateRegexp,
@@ -83,7 +85,14 @@ func MatchRegexp(r *regexp.Regexp) MatcherFunc {
 func MatchTimestamp(layout string) MatcherFunc {
 	return func(str string) Match {
 		r := timestampLayoutRegexps[layout]
-		return MatchRegexp(r)(str)
+		t, _ := r.Replace(str, "%s", -1, -1)
+		p, _ := r.FindStringMatch(str)
+		var x []string
+		x = append(x, p.Capture.String())
+		return Match {
+			Template: t,
+			Patterns: x,
+		}
 	}
 }
 

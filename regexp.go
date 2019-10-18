@@ -2,6 +2,7 @@ package marker
 
 import (
 	"fmt"
+	"github.com/dlclark/regexp2"
 	"regexp"
 )
 
@@ -23,21 +24,21 @@ const (
 )
 
 var (
-	ANSICRegexp       = regexp.MustCompile(fmt.Sprintf("%s %s %s %s %s", weekdaysAbv, monthsAbv, days, hhmmss, year))
-	UnixDateRegexp    = regexp.MustCompile(fmt.Sprintf("%s %s %s %s %s %s", weekdaysAbv, monthsAbv, days, hhmmss, timezone, year))
-	RubyDateRegexp    = regexp.MustCompile(fmt.Sprintf("%s %s %s %s %s %s", weekdaysAbv, monthsAbv, daysWithZero, hhmmss, numericZone, year))
-	RFC822Regexp      = regexp.MustCompile(fmt.Sprintf("%s %s [0-9]{2} %s %s", daysWithZero, monthsAbv, hhmm, timezone))
-	RFC822ZRegexp     = regexp.MustCompile(fmt.Sprintf("%s %s [0-9]{2} %s %s", daysWithZero, monthsAbv, hhmm, numericZone))
-	RFC850Regexp      = regexp.MustCompile(fmt.Sprintf("%s, %s-%s-[0-9]{2} %s %s", weekdays, daysWithZero, monthsAbv, hhmmss, timezone))
-	RFC1123Regexp     = regexp.MustCompile(fmt.Sprintf("%s, %s %s %s %s %s", weekdaysAbv, daysWithZero, monthsAbv, year, hhmmss, timezone))
-	RFC1123ZRegexp    = regexp.MustCompile(fmt.Sprintf("%s, %s %s %s %s %s", weekdaysAbv, daysWithZero, monthsAbv, year, hhmmss, numericZone))
-	RFC3339Regexp     = regexp.MustCompile(fmt.Sprintf("%s-%s-%sT%sZ%s", year, numericmonths, daysWithZero, hhmmss, hhmm))
-	RFC3339NanoRegexp = regexp.MustCompile(fmt.Sprintf("%s-%s-%sT%s%sZ%s", year, numericmonths, daysWithZero, hhmmss, nano, hhmm))
-	KitchenRegexp     = regexp.MustCompile("(([0-1]?[0-9]|2[0-3]):[0-5][0-9][P|A]M)")
-	StampRegexp       = regexp.MustCompile(fmt.Sprintf("%s %s %s", monthsAbv, days, hhmmss))
-	StampMilliRegexp  = regexp.MustCompile(fmt.Sprintf("%s %s %s%s", monthsAbv, days, hhmmss, milli))
-	StampMicroRegexp  = regexp.MustCompile(fmt.Sprintf("%s %s %s%s", monthsAbv, days, hhmmss, micro))
-	StampNanoRegexp   = regexp.MustCompile(fmt.Sprintf("%s %s %s%s", monthsAbv, days, hhmmss, nano))
+	ANSICRegexp       = regexp2.MustCompile(fmt.Sprintf("%s %s %s %s %s", weekdaysAbv, monthsAbv, days, hhmmss, year), 0)
+	UnixDateRegexp    = regexp2.MustCompile(fmt.Sprintf("%s %s %s %s %s %s", weekdaysAbv, monthsAbv, days, hhmmss, timezone, year), 0)
+	RubyDateRegexp    = regexp2.MustCompile(fmt.Sprintf("%s %s %s %s %s %s", weekdaysAbv, monthsAbv, daysWithZero, hhmmss, numericZone, year), 0)
+	RFC822Regexp      = regexp2.MustCompile(fmt.Sprintf("%s %s [0-9]{2} %s %s", daysWithZero, monthsAbv, hhmm, timezone), 0)
+	RFC822ZRegexp     = regexp2.MustCompile(fmt.Sprintf("%s %s [0-9]{2} %s %s", daysWithZero, monthsAbv, hhmm, numericZone), 0)
+	RFC850Regexp      = regexp2.MustCompile(fmt.Sprintf("%s, %s-%s-[0-9]{2} %s %s", weekdays, daysWithZero, monthsAbv, hhmmss, timezone), 0)
+	RFC1123Regexp     = regexp2.MustCompile(fmt.Sprintf("%s, %s %s %s %s %s", weekdaysAbv, daysWithZero, monthsAbv, year, hhmmss, timezone), 0)
+	RFC1123ZRegexp    = regexp2.MustCompile(fmt.Sprintf("%s, %s %s %s %s %s", weekdaysAbv, daysWithZero, monthsAbv, year, hhmmss, numericZone), 0)
+	RFC3339Regexp     = regexp2.MustCompile(fmt.Sprintf("%s-%s-%sT%sZ%s", year, numericmonths, daysWithZero, hhmmss, hhmm), 0)
+	RFC3339NanoRegexp = regexp2.MustCompile(fmt.Sprintf("%s-%s-%sT%s%sZ%s", year, numericmonths, daysWithZero, hhmmss, nano, hhmm), 0)
+	KitchenRegexp     = regexp2.MustCompile("(([0-1]?[0-9]|2[0-3]):[0-5][0-9][P|A]M)", 0)
+	StampRegexp       = regexp2.MustCompile(fmt.Sprintf("%s %s %s(?!(\.[0-9]))", monthsAbv, days, hhmmss), 0)
+	StampMilliRegexp  = regexp2.MustCompile(fmt.Sprintf("%s %s %s%s", monthsAbv, days, hhmmss, milli), 0)
+	StampMicroRegexp  = regexp2.MustCompile(fmt.Sprintf("%s %s %s%s", monthsAbv, days, hhmmss, micro), 0)
+	StampNanoRegexp   = regexp2.MustCompile(fmt.Sprintf("%s %s %s%s", monthsAbv, days, hhmmss, nano), 0)
 )
 
 // EmailRegexp is a Regular expression for RFC5322

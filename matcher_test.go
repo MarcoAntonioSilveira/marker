@@ -176,11 +176,11 @@ func Test_MatchTimestamp(t *testing.T) {
 	})
 
 	t.Run("Stamp", func(t *testing.T) {
-		str := "Current timestamp is Jan _2 15:04:05"
+		str := "Current timestamp is Jan _2 15:04:05 and Jan _2 15:04:07"
 		match := MatchTimestamp(time.Stamp)(str)
 
 		expectedMatch := Match{
-			Template: "Current timestamp is %s",
+			Template: "Current timestamp is %s and %s",
 			Patterns: []string{"Jan _2 15:04:05"},
 		}
 
